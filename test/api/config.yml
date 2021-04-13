@@ -1,0 +1,7 @@
+GLOBAL:
+  SERVICE: power_scheduler
+  ENDPOINTS:
+    power_scheduler:
+      plugin: localhost:50051
+      #plugin: dev-docker.pyengine.net:50062
+
