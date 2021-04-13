@@ -9,6 +9,7 @@ ENV SRC_DIR /tmp/src
 COPY pkg/*.txt ${PKG_DIR}/
 RUN pip install --upgrade pip && \
     pip install --upgrade -r ${PKG_DIR}/pip_requirements.txt
+    pip install azure-identity
 
 ARG CACHEBUST=1
 RUN pip install --upgrade --pre spaceone-core spaceone-api
