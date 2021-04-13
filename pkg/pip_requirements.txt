@@ -11,5 +11,6 @@ azure-mgmt-network
 azure-mgmt-resource
 azure-mgmt-sql
 azure-mgmt-monitor
+azure-identity
 
 
