@@ -5,12 +5,12 @@ spaceone-tester
 schematics
 google-auth
 google-api-python-client
+azure-identity
 azure-mgmt-compute
 azure-mgmt-core
 azure-mgmt-network
 azure-mgmt-resource
 azure-mgmt-sql
 azure-mgmt-monitor
-azure-identity
 
 
