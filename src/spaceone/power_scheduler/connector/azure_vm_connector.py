@@ -33,7 +33,7 @@ class AzureVMConnector(AzureConnector):
 
         credential = DefaultAzureCredential()
 
-        self.compute_client = ComputeManagementClient(credential=credential, subscription_id=subscription_id)
+        self.compute_client = ComputeManagementClient(credential=credential, subscription_id=subscription_id, api_version='2021-04-01')
         self.network_client = NetworkManagementClient(credential=credential, subscription_id=subscription_id)
         self.resource_client = ResourceManagementClient(credential=credential, subscription_id=subscription_id)
         self.subscription_client: SubscriptionClient = SubscriptionClient(credential=credential)
@@ -108,6 +108,7 @@ class AzureVMConnector(AzureConnector):
 
     def get_vm(self, resource_group_name, vm_name):
         try:
+            print("api_version")
             vm_obj = self.compute_client.virtual_machines.get(resource_group_name=resource_group_name, vm_name=vm_name)
         except Exception as e:
             _LOGGER.error(f'[AzureVmConnector] get_vm error: {e}')
