@@ -1,7 +1,6 @@
 import logging
 
 from spaceone.power_scheduler.libs.connector import AzureConnector
-from spaceone.inventory.error import *
 
 __all__ = ['SubscriptionConnector']
 _LOGGER = logging.getLogger(__name__)

@@ -8,7 +8,6 @@ from azure.mgmt.network import NetworkManagementClient
 from azure.mgmt.sql import SqlManagementClient
 from azure.mgmt.monitor import MonitorManagementClient
 
-from spaceone.core.error import *
 from spaceone.core.connector import BaseConnector
 
 DEFAULT_SCHEMA = 'azure_client_secret'
