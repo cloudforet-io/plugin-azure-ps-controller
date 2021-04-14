@@ -1,8 +1,6 @@
 __all__ = ['AzureVmScaleSetManager']
 
 import logging
-# from spaceone.power_scheduler.error.google_cloud import *
-from .controller_manager import ControllerManager
 from spaceone.power_scheduler.libs.manager import AzureManager
 from spaceone.power_scheduler.connector.azure_vmss_connector import AzureVmScaleSetConnector
 _LOGGER = logging.getLogger(__name__)
