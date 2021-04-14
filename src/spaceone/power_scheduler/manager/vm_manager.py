@@ -88,8 +88,8 @@ class AzureVmManager(AzureManager):
 
         """
         azure_vm_connector: AzureVMConnector = self.locator.get_connector(self.connector_name)
-        # azure_vm_connector.get_connect(params['secret_data'])
-        self.set_connector(params['secret_data'])
+        azure_vm_connector.get_connect(params['secret_data'])
+        # self.set_connector(params['secret_data'])
 
         subscription_info = params['subscription_info']
         resource_data = params['resource_data']
