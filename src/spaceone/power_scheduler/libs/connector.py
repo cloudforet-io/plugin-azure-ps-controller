@@ -31,6 +31,7 @@ class AzureConnector(BaseConnector):
 
         super().__init__(transaction=None, config=None)
         self.compute_client = None
+        self.vm_compute_client = None
         self.resource_client = None
         self.subscription_client = None
         self.network_client = None
@@ -48,6 +49,7 @@ class AzureConnector(BaseConnector):
         credential = DefaultAzureCredential()
 
         self.compute_client = ComputeManagementClient(credential=credential, subscription_id=subscription_id)
+        self.vm_compute_client = ComputeManagementClient(credential=credential, subscription_id=subscription_id, expand='instanceView')
         self.resource_client = ResourceManagementClient(credential=credential, subscription_id=subscription_id)
         self.network_client = NetworkManagementClient(credential=credential, subscription_id=subscription_id)
         self.subscription_client: SubscriptionClient = SubscriptionClient(credential=credential)

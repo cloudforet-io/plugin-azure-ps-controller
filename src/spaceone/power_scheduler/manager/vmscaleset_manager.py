@@ -34,9 +34,9 @@ class AzureVmScaleSetManager(AzureManager):
 
         subscription_info = params['subscription_info']
         resource_data = params['resource_data']
-        resource_id = resource_data.get('resource_id', '')
-        vm_scale_set_name = resource_data.get('vm_scale_set_name', '')
-        resource_group_name = resource_data.get('resource_group_name', '')
+        resource_id = resource_data.get('reference', '').get('resource_id')
+        vm_scale_set_name = resource_data.get('name', '')
+        resource_group_name = resource_data.get('data', '').get('resource_group', '').get('resource_group_name')
 
         print(f'Compute VM |  Virtual Machine Scale Set: {vm_scale_set_name}, proceed to START!!')
         parameters: list = self.get_parameters(subscription_info['subscription_id'], resource_group_name, resource_id, vm_scale_set_name)
@@ -91,9 +91,9 @@ class AzureVmScaleSetManager(AzureManager):
 
         subscription_info = params['subscription_info']
         resource_data = params['resource_data']
-        resource_id = resource_data.get('resource_id', '')
-        vm_scale_set_name = resource_data.get('vm_scale_set_name', '')
-        resource_group_name = resource_data.get('resource_group_name', '')
+        resource_id = resource_data.get('reference', '').get('resource_id')
+        vm_scale_set_name = resource_data.get('name', '')
+        resource_group_name = resource_data.get('data', '').get('resource_group', '').get('resource_group_name')
 
         print(f'Compute VM |  Virtual Machine Scale Set: {vm_scale_set_name}, proceed to STOP!!')
         parameters: list = self.get_parameters(subscription_info['subscription_id'], resource_group_name, resource_id,

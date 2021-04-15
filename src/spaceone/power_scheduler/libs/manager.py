@@ -173,7 +173,7 @@ class AzureManager(BaseManager):
         return vm_dict
 
     @staticmethod
-    def get_parameters(subscription_id, resource_group_name, resource_id, vm_scale_set_name):
+    def get_parameters(subscription_id, resource_group_name, resource_id, name):
 
         '''
         Multi actions for future use
@@ -200,7 +200,7 @@ class AzureManager(BaseManager):
         #
         # return parameters
 
-        params = {'subscription_id': subscription_id, 'resource_id': resource_id, 'resource_group_name': resource_group_name, 'vm_scale_set_name': vm_scale_set_name}
+        params = {'subscription_id': subscription_id, 'resource_id': resource_id, 'resource_group_name': resource_group_name, 'name': name}
 
         return [params]
 

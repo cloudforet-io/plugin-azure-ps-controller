@@ -37,16 +37,17 @@ class AzureVmManager(AzureManager):
         # self.set_connector(params['secret_data'])
         subscription_info = params['subscription_info']
         resource_data = params['resource_data']
-        resource_id = resource_data.get('resource_id', '')
-        vm_name = resource_data.get('vm_name', '')
-        resource_group_name = resource_data.get('resource_group_name', '')
+        resource_id = resource_data.get('reference', '').get('resource_id', '')
+        vm_name = resource_data.get('name', '')
+        resource_group_name = resource_data.get('data', '').get('resource_group', '').get('resource_group_name')
 
         print(f'Compute VM |  Virtual Machine: {vm_name}, proceed to START!!')
         parameters: list = self.get_parameters(subscription_info['subscription_id'], resource_group_name, resource_id, vm_name)
 
         # Step 1 : Get vm from requested input params
         selected_vms = azure_vm_connector.get_selected_vms(parameters)
-
+        print("selected vms in azure_vm_manager")
+        print(selected_vms)
         # Step 2 : Start instance by status
         for vm in selected_vms:
             vm.update({
@@ -93,9 +94,10 @@ class AzureVmManager(AzureManager):
 
         subscription_info = params['subscription_info']
         resource_data = params['resource_data']
-        resource_id = resource_data.get('resource_id', '')
-        vm_name = resource_data.get('vm_name', '')
-        resource_group_name = resource_data.get('resource_group_name', '')
+
+        resource_id = resource_data.get('reference', '').get('resource_id', '')
+        vm_name = resource_data.get('name', '')
+        resource_group_name = resource_data.get('data', '').get('resource_group', '').get('resource_group_name')
 
         print(f'Compute VM |  Virtual Machine: {vm_name}, proceed to STOP!!')
         parameters: list = self.get_parameters(subscription_info['subscription_id'], resource_group_name, resource_id,

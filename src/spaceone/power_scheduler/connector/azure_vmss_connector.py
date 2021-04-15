@@ -33,7 +33,7 @@ class AzureVmScaleSetConnector(AzureConnector):
 
         credential = DefaultAzureCredential()
 
-        self.compute_client = ComputeManagementClient(credential=credential, subscription_id=subscription_id)
+        self.compute_client = ComputeManagementClient(credential=credential, subscription_id=subscription_id, api_version='2020-06-01')
         self.network_client = NetworkManagementClient(credential=credential, subscription_id=subscription_id)
         self.resource_client = ResourceManagementClient(credential=credential, subscription_id=subscription_id)
         self.subscription_client: SubscriptionClient = SubscriptionClient(credential=credential)
@@ -87,9 +87,14 @@ class AzureVmScaleSetConnector(AzureConnector):
                 }
         '''
         results = []
+        print("params in vmss connector")
+        print(parameters)
 
         for param in parameters:
-            response = self.get_vmss(param.get('resource_group_name', ''), param.get('vm_scale_set_name'))
+            resource_group_name = param.get('resource_group_name', '')
+            vm_name = param.get('name', '')
+
+            response = self.get_vmss(param.get('resource_group_name', ''), param.get('name'))
             param.update({'result': response})
             results.append(param)
 
