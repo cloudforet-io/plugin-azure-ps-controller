@@ -33,7 +33,8 @@ class AzureVMConnector(AzureConnector):
 
         credential = DefaultAzureCredential()
 
-        self.compute_client = ComputeManagementClient(credential=credential, subscription_id=subscription_id, api_version='2021-04-01')
+        self.compute_client = ComputeManagementClient(credential=credential, subscription_id=subscription_id)
+        self.vm_compute_client = ComputeManagementClient(credential=credential, subscription_id=subscription_id, api_version='2020-12-01')
         self.network_client = NetworkManagementClient(credential=credential, subscription_id=subscription_id)
         self.resource_client = ResourceManagementClient(credential=credential, subscription_id=subscription_id)
         self.subscription_client: SubscriptionClient = SubscriptionClient(credential=credential)
@@ -84,7 +85,7 @@ class AzureVMConnector(AzureConnector):
                 'subscription_id' : <>
                 'resource_id': <>
                 'resource_group_name': <>
-                'vm_scale_set_name' : <>
+                'vm_name' : <>
             }
         ]
         :return:
@@ -100,7 +101,11 @@ class AzureVMConnector(AzureConnector):
         results = []
 
         for param in parameters:
-            response = self.get_vm(param.get('resource_group_name', ''), param.get('vm_name', ''))
+            print("param in azure_vm_connector")
+            print(param)
+            resource_group_name = param.get('resource_group_name', '')
+            vm_name = param.get('name', '')
+            response = self.get_vm(resource_group_name=resource_group_name, vm_name=vm_name)
             param.update({'result': response})
             results.append(param)
 
@@ -108,8 +113,7 @@ class AzureVMConnector(AzureConnector):
 
     def get_vm(self, resource_group_name, vm_name):
         try:
-            print("api_version")
-            vm_obj = self.compute_client.virtual_machines.get(resource_group_name=resource_group_name, vm_name=vm_name)
+            vm_obj = self.vm_compute_client.virtual_machines.get(resource_group_name=resource_group_name, vm_name=vm_name, expand='InstanceView')
         except Exception as e:
             _LOGGER.error(f'[AzureVmConnector] get_vm error: {e}')
             raise e
