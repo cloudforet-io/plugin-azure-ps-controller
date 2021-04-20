@@ -71,6 +71,10 @@ Please, set authentication privilege for followings:
         - Microsoft.Compute/virtualMachineScaleSets/virtualMachines/restart/action	
         - Microsoft.Compute/virtualMachineScaleSets/virtualMachines/deallocate/action				
 
+If you need a tutorial for creating Azure custom roles, please follow the link below. 
+
+https://docs.microsoft.com/en-us/azure/role-based-access-control/custom-roles-portal#step-1-determine-the-permissions-you-need 
+
 ### Running State Overview     
 
 Plugin for Azure to Check Running status
