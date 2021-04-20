@@ -32,18 +32,62 @@ class TestCollector(TestCase):
     def test_collect(self):
         options = {}
         filter = {}
+        '''
         resource_data = {
-            'resource_id': '/subscriptions/3ec64e1e-1ce8-4f2c-82a0-a7f6db0899ca/resourceGroups/jiyoon-rg-april-067/providers/Microsoft.Compute/virtualMachineScaleSets/jiyoon-vmss-always-stopped',
+            'resource_id': '/subscriptions/3ec64e1e-1ce8-4f2c-82a0-a7f6db0899ca/resourceGroups/dk-test-metrics/providers/Microsoft.Compute/virtualMachines/dk-test-vm-01',
             'cloud_service_group': 'Compute',
-            'cloud_service_type': 'VmScaleSet',
+            'cloud_service_type': 'VirtualMachine',
             'subscription_id': '3ec64e1e-1ce8-4f2c-82a0-a7f6db0899ca',
-            'resource_group_name': 'jiyoon-rg-april-067',
-            'vm_scale_set_name': 'jiyoon-vmss-always-stopped'
+            'resource_group_name': 'dk-test-metrics',
+            'name': 'dk-test-vm-01'
         }
-        resource_stream = self.power_scheduler.Controller.start({'secret_data': self.azure_credentials, 'resource_data': resource_data})
-        # resource_stream = self.power_scheduler.Controller.stop({'secret_data': self.azure_credentials, 'resource_data': resource_data})
+        '''
+        resource_data = {
+            "cloud_service_group": "Compute",
+            "data": {
+                "resource_group": {
+                    "resource_group_name": "jiyoon-rg-april-067",
+                    "resource_group_id": "/subscriptions/3ec64e1e-1ce8-4f2c-82a0-a7f6db0899ca/resourceGroups/jiyoon-rg-april-067"
+                },
 
-        print("resource_stream")
+                "subscription": {
+                    "subscription_id": "3ec64e1e-1ce8-4f2c-82a0-a7f6db0899ca"
+                }
+            },
+            "name": "jiyoon-vmss-always-runs",
+            "provider": "azure",
+            "reference": {
+                "resource_id": "/subscriptions/3ec64e1e-1ce8-4f2c-82a0-a7f6db0899ca/resourceGroups/jiyoon-rg-april-067/providers/Microsoft.Compute/virtualMachineScaleSets/jiyoon-vmss-always-runs"
+            },
+            "server_type": "UNKNOWN",
+            "region_code": "eastus",
+            "tags": {
+            },
+            "ip_addresses": [
+            ],
+            "collection_info": {
+                "pinned_keys": [
+                ],
+                "change_history": [
+                ],
+                "service_accounts": [
+                ],
+                "secrets": [
+                    "secret-19c714fea41a",
+                    "secret-fe25ca834a20"
+                ],
+                "state": "MANUAL",
+                "collectors": [
+                ]
+            },
+            "cloud_service_type": "VmScaleSet",
+            "metadata": {
+            }
+        }
+
+        # resource_stream = self.power_scheduler.Controller.start({'secret_data': self.azure_credentials, 'resource_data': resource_data})
+        resource_stream = self.power_scheduler.Controller.stop({'secret_data': self.azure_credentials, 'resource_data': resource_data})
+
         print(resource_stream)
 
 

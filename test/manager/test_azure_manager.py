@@ -91,7 +91,7 @@ class TestPowerSchedulerService(unittest.TestCase):
             'cloud_service_type': 'VirtualMachine',
             'subscription_id': '3ec64e1e-1ce8-4f2c-82a0-a7f6db0899ca',
             'resource_group_name': 'jiyoon-rg-0401',
-            'vm_name': 'jiyoon-vm-april'
+            'name': 'jiyoon-vm-april'
         }
 
         params = {'secret_data': secret_data, 'resource_data': resource_data}

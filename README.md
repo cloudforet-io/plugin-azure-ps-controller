@@ -43,7 +43,7 @@ Please, set authentication privilege for followings:
 - ##### Compute VM(Instance)
     - Scopes
         - https://www.googleapis.com/auth/compute
-        - https://www.googleapis.com/auth/cloud-platform
+        - https://www.googleapis.com/auth
         
     - IAM
         - compute.instances.get 
