@@ -1,6 +1,6 @@
 # plugin-azure-cloud-power-controller
 ![Microsoft Azure Cloud Services](https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/azure-cloud-services.svg)
-**Plugin to control ```Start / Deallocate``` state and virtual machine scale sets for Azure Cloud Services; Virtual Machine, Virtual Machine Scale Sets, Azure DB**
+**Plugin to control ```Start / Deallocate``` state and virtual machine scale sets for Azure Cloud Services; Virtual Machine, Virtual Machine Scale Sets**
 
 Control ```Start / Deallocate``` State and autoscaling policies with reserved schedule from Azure Platform. 
 
@@ -15,19 +15,13 @@ Please contact us if you need any further information. (<support@spaceone.dev>)
 
 * Table of Contents
     * [Authentication Overview](#authentication-overview)
-        * [Compute Engine](#compute-engine)
-            * [Instance](#compute-vminstance)
-            * [Instance Group](#instance-group)
-        * [CLOUD SQL](#cloud-sql)
-            * [Instance](#instance)
-     * [Running Sate Overview](#running-sate-overview)
-        * [ComputeEngine VM Instance](#computeengine-vm-instance)
+        * [Virtual Machines](#virtual-machines)
+        * [Virtual Machine Scale Sets](#Virtual-machine-scale-sets)
+     * [Running State Overview](#running-state-overview)
+        * [Virtual Machines](#virtual-machines)
             * ['OFF' state Condition](#off-state-condition)
             * [Default Schema](#default-schema)
-        * [Instance Group](#instance-group)
-            * ['OFF' state Condition](#off-state-condition)
-            * [Default Schema](#default-schema)
-        * [CLOUD SQL](#cloud-sql)
+        * [Virtual Machine Scale Sets](#virtual-machine-scale-sets)
             * ['OFF' state Condition](#off-state-condition)
             * [Default Schema](#default-schema)
        
@@ -38,102 +32,98 @@ Registered service account on SpaceONE must have certain permissions to proceed 
 Please, set authentication privilege for followings:
 
 
-#### [Compute Engine](https://cloud.google.com/compute/docs/apis)
+#### Virtual Machines
 
-- ##### Compute VM(Instance)
+- ##### [Virtual Machines](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachines)
     - Scopes
-        - https://www.googleapis.com/auth/compute
-        - https://www.googleapis.com/auth
+        - https://docs.microsoft.com/en-us/rest/api/compute/virtualmachines/list
+        - https://docs.microsoft.com/en-us/rest/api/compute/virtualmachines/poweroff
+        - https://docs.microsoft.com/en-us/rest/api/compute/virtualmachines/start
+        - https://docs.microsoft.com/en-us/rest/api/compute/virtualmachines/get
+        - https://docs.microsoft.com/en-us/rest/api/compute/virtualmachines/deallocate
         
-    - IAM
-        - compute.instances.get 
-        - compute.instances.start
-        - compute.instances.stop
-        - compute.instances.reset
+    - Actions
+        - Microsoft.Compute/virtualMachines/read	
+        - Microsoft.Compute/virtualMachines/write	
+        - Microsoft.Compute/virtualMachines/start/action	
+        - Microsoft.Compute/virtualMachines/powerOff/action	
+        - Microsoft.Compute/virtualMachines/restart/action
+        - Microsoft.Compute/virtualMachines/deallocate/action	
+        - Microsoft.Compute/virtualMachines/instanceView/read
+        - Microsoft.Compute/virtualMachines/extensions/read		
         
-- ##### Instance Group
+- ##### [Virtual Machine Scale Sets](https://docs.microsoft.com/en-us/rest/api/compute/virtualmachinescalesets)
     - Scopes
-        - https://www.googleapis.com/auth/compute
-        - https://www.googleapis.com/auth/cloud-platform
-     
-#### [Cloud SQL](https://cloud.google.com/sql/docs/mysql/apis)
+        - https://docs.microsoft.com/en-us/rest/api/compute/virtualmachinescalesets/list
+        - https://docs.microsoft.com/en-us/rest/api/compute/virtualmachinescalesets/deallocate
+        - https://docs.microsoft.com/en-us/rest/api/compute/virtualmachinescalesets/poweroff
+        - https://docs.microsoft.com/en-us/rest/api/compute/virtualmachinescalesets/start
+      
+    - Actions
+        - Microsoft.Compute/virtualMachineScaleSets/read	
+        - Microsoft.Compute/virtualMachineScaleSets/start/action	
+        - Microsoft.Compute/virtualMachineScaleSets/powerOff/action
+        - Microsoft.Compute/virtualMachineScaleSets/restart/action	
+        - Microsoft.Compute/virtualMachineScaleSets/deallocate/action
+        - Microsoft.Compute/virtualMachineScaleSets/virtualMachines/read
+        - Microsoft.Compute/virtualMachineScaleSets/virtualMachines/start/action
+        - Microsoft.Compute/virtualMachineScaleSets/virtualMachines/powerOff/action	
+        - Microsoft.Compute/virtualMachineScaleSets/virtualMachines/restart/action	
+        - Microsoft.Compute/virtualMachineScaleSets/virtualMachines/deallocate/action				
 
-- #### Instance
-    - Scopes 
-        - https://www.googleapis.com/auth/cloud-platform
-        - https://www.googleapis.com/auth/sqlservice.admin
+### Running State Overview     
+
+Plugin for Azure to Check Running status
+- Collecting Virtual Machines State
+- Collecting Virtual Machine Scale Sets State
 
 
-### Running Sate Overview     
+#### Virtual Machines
+- cloud_service_group: Compute
+- cloud_service_type: VirtualMachines
+- provider: azure
 
-Plugin for Google Cloud to Check Running status
-- Collecting ComputeEngine Instance State
-- Collecting Cloud SQL Instance State
-- Collecting Instance Group State
-
-
-#### ComputeEngine VM Instance
-- cloud_service_group: ComputeEngine
-- cloud_service_type: Instance
-- provider: google_cloud
 ###### 'OFF' state Condition:
 - data.power_state.status = 'STOPPED'
 ###### Default Schema
 ~~~
-"data": {
-   "google_cloud":{
-      "self_link":"https://www.googleapis.com/compute/v1/projects/google-cloud-project/zones/us-east1-b/instances/google-cloud-compute-instance-01"
-   },
-   "compute":{
-      "instance_state":"RUNNING"
-   },
+"reference": {
+   "external_link":  "https://portal.azure.com/#@.onmicrosoft.com/resource/subscriptions/SUBSCRIPTION_ID/resourceGroups/RESOURCE_GROUP/providers/Microsoft.Compute/virtualMachineScaleSets/RESOURCE_NAME/overview"
    "power_state":{
       "status":"STOPPED"
    }
 }
 ~~~
 ---
-#### Instance Group
-- cloud_service_group: ComputeEngine
-- cloud_service_type: InstanceGroup
-- provider: google_cloud
+#### Virtual Machine Scale Sets 
+- cloud_service_group: Compute
+- cloud_service_type: VmScaleSets
+- provider: azure
 ###### 'OFF' state Condition: 
- - data.instance_group_manager.target_size = 1 (will be deprecated)
- - data.size = 1
- - data.auto_scaler.autoscaling_policy.mode = 'OFF'
- - data.instance_group_type = 'STATELESS'
+ - data.instances.statuses.code = 'PowerState/deallocated'
 ###### Default Schema
 ~~~
 "data": {
-   "instance_group_manager":{
-      "target_size":1
+   "virtual_machine_scale_set_power_state":[
+      "profiles": {
+         "rules" : {
+               "metric_trigger" : <dict>
+               "scale_action" : <dict> 
+          }
+       }
+   ],
+   "reference":{
+      "external_link":"https://portal.azure.com/#@.onmicrosoft.com/resource/subscriptions/SUBSCRIPTION_ID/resourceGroups/RESOURCE_GROUP_NAME/providers/Microsoft.Compute/virtualMachineScaleSets/VM_SCALE_SET_NAME/overview"
    },
-   "auto_scaler":{
-      "recommended_size":1,
-      "autoscaling_policy":{
-         "max_num_replicas":5,
-         "min_num_replicas":1,
-         "mode":"OFF"
-      }
-   },
-   "size": 1,
-   "instance_group_type":"STATELESS",
-   "self_link":"https://www.googleapis.com/compute/v1/projects/bluese-cloudone-20200113/zones/asia-northeast3-a/instanceGroups/instance-group-magnaged-zonal-mode-on"
+   "instance_count": 2,
+   "vm_instances":[
+        "vm_instance_status_profile" : {
+             "statuses" : [
+                 {
+                    "code" : "PowerState/deallocated"
+                 }
+             ]
+        }
+    ],
 }
-~~~
----
-#### Cloud SQL
-- cloud_service_group: CloudSQL
-- cloud_service_type: Instance
-- provider: google_cloud
-###### 'OFF' state Condition:
-- data.power_state.status = 'STOPPED'
-###### Default Schema
-~~~
-"data": {
-   "self_link":"https://sqladmin.googleapis.com/sql/v1beta4/projects/google-cloud-project/instances/cloud-sql-instance-name",
-   "power_state":{
-      "status":"STOPPED"
-   }
-} 
 ~~~
