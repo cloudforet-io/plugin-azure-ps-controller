@@ -15,9 +15,6 @@ MANAGER_MAP = {
     'VmScaleSet': 'AzureVmScaleSetManager'
 }
 
-EXCLUDE_ZONE = ['CloudSQLManager']
-
-
 @authentication_handler
 class ControllerService(BaseService):
     def __init__(self, metadata):
@@ -25,6 +22,7 @@ class ControllerService(BaseService):
 
     @check_required(['options'])
     def init(self, params):
+        print("init controller")
         """ init plugin by options
         """
         capability = {
@@ -42,7 +40,7 @@ class ControllerService(BaseService):
                 {
                     'resource_type': 'inventory.CloudService?provider=azure&cloud_service_group=Compute&cloud_service_type=VmScaleSet',
                     'required_keys': ['reference.resource_id', 'cloud_service_group', 'cloud_service_type',
-                                      'data.subscription.subscription_id', 'data.resource_group', 'data.name']
+                                      'data.subscription_id', 'data.resource_group', 'data.name']
                 }
 
             ]
@@ -73,6 +71,7 @@ class ControllerService(BaseService):
     @check_required(['secret_data', 'resource_data'])
     @append_query_filter(['schema'])
     def start(self, params):
+        print("controller_service start")
         """ verify options capability
         Args:
             params
@@ -107,6 +106,7 @@ class ControllerService(BaseService):
         resource_data = params.get('resource_data')
 
         # self._print_params(secret_data, resource_id, resource_type, resource_data)
+        print("#####")
         controller_manager = self.call_manager(resource_data.get('cloud_service_type'))  # ex.cloud_service_type: VirtualMachine / manager : AzureVmManager
 
         info = controller_manager.start(params)
@@ -117,6 +117,7 @@ class ControllerService(BaseService):
     @check_required(['secret_data', 'resource_data'])
     @append_query_filter(['schema'])
     def stop(self, params):
+
         """ verify options capability
         Args:
             params
@@ -182,6 +183,8 @@ class ControllerService(BaseService):
 
     def call_manager(self, resource_type):
         manager = MANAGER_MAP.get(resource_type)  # ex.AzureVmManager
+        print("manager")
+        print(manager)
         if not manager:
             raise ERROR_UNKNOWN_RESOURCE_TYPE(resource_type=resource_type)
 
