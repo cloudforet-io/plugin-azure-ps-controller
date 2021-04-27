@@ -23,7 +23,7 @@ class AzureVMConnector(AzureConnector):
         super().__init__(**kwargs)
         # self.set_connect(kwargs.get('secret_data'))
 
-    def get_connect(self, secret_data):  # TODO : DELETE SOON
+    def get_connect(self, secret_data):
         subscription_id = secret_data['subscription_id']
 
         os.environ['AZURE_SUBSCRIPTION_ID'] = subscription_id

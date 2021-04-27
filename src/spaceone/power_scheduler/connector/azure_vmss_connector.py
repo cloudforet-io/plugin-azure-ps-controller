@@ -33,13 +33,17 @@ class AzureVmScaleSetConnector(AzureConnector):
 
         credential = DefaultAzureCredential()
 
-        self.compute_client = ComputeManagementClient(credential=credential, subscription_id=subscription_id, api_version='2020-06-01')
+        # self.compute_client = ComputeManagementClient(credential=credential, subscription_id=subscription_id, api_version='2020-06-01')
+        self.compute_client = ComputeManagementClient(credential=credential, subscription_id=subscription_id)
         self.network_client = NetworkManagementClient(credential=credential, subscription_id=subscription_id)
         self.resource_client = ResourceManagementClient(credential=credential, subscription_id=subscription_id)
         self.subscription_client: SubscriptionClient = SubscriptionClient(credential=credential)
 
     def start(self, resource_group_name, vm_scale_set_name):
         try:
+            print("rgname")
+            print(resource_group_name)
+            print(vm_scale_set_name)
             response = self.compute_client.virtual_machine_scale_sets.begin_start(resource_group_name=resource_group_name, vm_scale_set_name=vm_scale_set_name)
             _LOGGER.info(f'[AzureVmScaleSetConnector] Start vmss : {response}')
             return response
@@ -93,6 +97,9 @@ class AzureVmScaleSetConnector(AzureConnector):
         for param in parameters:
             resource_group_name = param.get('resource_group_name', '')
             vm_name = param.get('name', '')
+            print("resource_group_name")
+            print(resource_group_name)
+
 
             response = self.get_vmss(param.get('resource_group_name', ''), param.get('name'))
             param.update({'result': response})
