@@ -41,9 +41,6 @@ class AzureVmScaleSetConnector(AzureConnector):
 
     def start(self, resource_group_name, vm_scale_set_name):
         try:
-            print("rgname")
-            print(resource_group_name)
-            print(vm_scale_set_name)
             response = self.compute_client.virtual_machine_scale_sets.begin_start(resource_group_name=resource_group_name, vm_scale_set_name=vm_scale_set_name)
             _LOGGER.info(f'[AzureVmScaleSetConnector] Start vmss : {response}')
             return response
@@ -91,15 +88,10 @@ class AzureVmScaleSetConnector(AzureConnector):
                 }
         '''
         results = []
-        print("params in vmss connector")
-        print(parameters)
 
         for param in parameters:
             resource_group_name = param.get('resource_group_name', '')
             vm_name = param.get('name', '')
-            print("resource_group_name")
-            print(resource_group_name)
-
 
             response = self.get_vmss(param.get('resource_group_name', ''), param.get('name'))
             param.update({'result': response})

@@ -71,7 +71,6 @@ class ControllerService(BaseService):
     @check_required(['secret_data', 'resource_data'])
     @append_query_filter(['schema'])
     def start(self, params):
-        print("controller_service start")
         """ verify options capability
         Args:
             params
@@ -106,7 +105,6 @@ class ControllerService(BaseService):
         resource_data = params.get('resource_data')
 
         # self._print_params(secret_data, resource_id, resource_type, resource_data)
-        print("#####")
         controller_manager = self.call_manager(resource_data.get('cloud_service_type'))  # ex.cloud_service_type: VirtualMachine / manager : AzureVmManager
 
         info = controller_manager.start(params)
