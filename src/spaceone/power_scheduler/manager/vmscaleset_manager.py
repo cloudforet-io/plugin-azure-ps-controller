@@ -28,6 +28,20 @@ class AzureVmScaleSetManager(AzureManager):
 
             Response:
         """
+        update_info = {}
+        data = {}
+        '''
+        # update info (1)
+        update_info = {
+          'action': 'update_cloud_service',
+            'data': {
+                'power_state': {
+                    'status': "RUNNING"
+                }
+            }
+        }
+        '''
+
         azure_vmss_connector: AzureVmScaleSetConnector = self.locator.get_connector(self.connector_name)
         azure_vmss_connector.get_connect(params['secret_data'])
         # self.set_connector(params['secret_data'])
@@ -37,6 +51,7 @@ class AzureVmScaleSetManager(AzureManager):
         resource_id = resource_data.get('reference', '').get('resource_id')
         vm_scale_set_name = resource_data.get('data', '').get('name', '')
         resource_group_name = resource_data.get('data', '').get('resource_group', '')
+
         print(f'Compute VM |  Virtual Machine Scale Set: {vm_scale_set_name}, proceed to START!!')
         parameters: list = self.get_parameters(subscription_info['subscription_id'], resource_group_name, resource_id, vm_scale_set_name)
 
@@ -55,6 +70,15 @@ class AzureVmScaleSetManager(AzureManager):
                 res = azure_vmss_connector.start(resource_group_name, vm_scale_set_name)
                 _LOGGER.debug(f'[start] instance res: {res}')
                 print('start res')
+        '''
+        # Step 3 : Update update_info
+        update_info.update({
+            'data': data,
+            'action': 'update_cloud_service'
+        })
+        print("update_info")
+        print(update_info)
+        '''
         return {}
 
     def stop(self,  params):
@@ -110,6 +134,9 @@ class AzureVmScaleSetManager(AzureManager):
             if vm_status != 'PowerState/deallocated':
                 res = azure_vm_connector.deallocate(resource_group_name, vm_scale_set_name)
                 _LOGGER.debug(f'[deallocate] instance res: {res}')
-
+        '''
+        'data': {},
+        'action': 'update_cloud_service
+        '''
         return {}
 
