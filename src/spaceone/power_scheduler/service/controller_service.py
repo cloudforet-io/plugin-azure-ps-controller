@@ -40,7 +40,7 @@ class ControllerService(BaseService):
                 {
                     'resource_type': 'inventory.CloudService?provider=azure&cloud_service_group=Compute&cloud_service_type=VmScaleSet',
                     'required_keys': ['reference.resource_id', 'cloud_service_group', 'cloud_service_type',
-                                      'data.subscription_id', 'data.resource_group', 'data.name']
+                                      'data.subscription_id', 'data.resource_group', 'data.name', 'data.vm_instances']
                 }
 
             ]
