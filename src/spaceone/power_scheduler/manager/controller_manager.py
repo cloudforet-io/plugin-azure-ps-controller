@@ -22,11 +22,8 @@ class ControllerManager(BaseManager):
         return r
 
     def set_connector(self, secret_data):
-        print("controller manager class")
         if self.azure_connector is None:
             self.azure_connector = self.locator.get_connector(self.connector_name)
-            print("after")
-            print(self.azure_connector)
             self.azure_connector.get_connect(secret_data)
 
     def start(self, secret_data, resource_type, resource_id, resource_data):
