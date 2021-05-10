@@ -69,16 +69,7 @@ class AzureVmScaleSetManager(AzureManager):
             if vm_status != 'PowerState/running':
                 res = azure_vmss_connector.start(resource_group_name, vm_scale_set_name)
                 _LOGGER.debug(f'[start] instance res: {res}')
-                print('start res')
-        '''
-        # Step 3 : Update update_info
-        update_info.update({
-            'data': data,
-            'action': 'update_cloud_service'
-        })
-        print("update_info")
-        print(update_info)
-        '''
+
         update_info = {
             'data': {},
             'action': 'update_cloud_service'

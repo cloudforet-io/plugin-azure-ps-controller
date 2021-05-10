@@ -46,8 +46,6 @@ class AzureVmManager(AzureManager):
 
         # Step 1 : Get vm from requested input params
         selected_vms = azure_vm_connector.get_selected_vms(parameters)
-        print("selected vms in azure_vm_manager")
-        print(selected_vms)
         # Step 2 : Start instance by status
         for vm in selected_vms:
             vm.update({

@@ -101,8 +101,6 @@ class AzureVMConnector(AzureConnector):
         results = []
 
         for param in parameters:
-            print("param in azure_vm_connector")
-            print(param)
             resource_group_name = param.get('resource_group_name', '')
             vm_name = param.get('name', '')
             response = self.get_vm(resource_group_name=resource_group_name, vm_name=vm_name)

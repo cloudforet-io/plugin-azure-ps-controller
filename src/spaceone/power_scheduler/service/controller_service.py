@@ -22,7 +22,7 @@ class ControllerService(BaseService):
 
     @check_required(['options'])
     def init(self, params):
-        print("init controller")
+
         """ init plugin by options
         """
         capability = {
@@ -86,6 +86,7 @@ class ControllerService(BaseService):
                         'subscription_id' : <subscription_id>
                         'resource_group_name' : <rg_name>,
                         'vm_name' : <vm_name>,
+                        'vm_instances' : [<vm_instance>]
                         'subscription_info' :
                             {
                                 'subscription_id': subscription_info.subscription_id,
@@ -131,6 +132,7 @@ class ControllerService(BaseService):
                         'subscription_id' : <subscription_id>
                         'resource_group_name' : <rg_name>,
                         'vm_name' : <vm_name>,
+                        'vm_instances' : [<vm_instance>]
                         'subscription_info' :
                             {
                                 'subscription_id': subscription_info.subscription_id,
@@ -181,8 +183,6 @@ class ControllerService(BaseService):
 
     def call_manager(self, resource_type):
         manager = MANAGER_MAP.get(resource_type)  # ex.AzureVmManager
-        print("manager")
-        print(manager)
         if not manager:
             raise ERROR_UNKNOWN_RESOURCE_TYPE(resource_type=resource_type)
 
