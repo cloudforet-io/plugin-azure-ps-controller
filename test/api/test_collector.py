@@ -46,17 +46,17 @@ class TestCollector(TestCase):
         resource_data = {
             "cloud_service_group": "Compute",
             "data": {
-                "name": "jiyoon-vmss-power-state-test",
+                "name": "jiyoon-vmss-normal",
                 "subscription_id": "3ec64e1e-1ce8-4f2c-82a0-a7f6db0899ca",
-                "resource_group":  "jiyoon-rg-april-067",
-                "resource_group_id": "/subscriptions/3ec64e1e-1ce8-4f2c-82a0-a7f6db0899ca/resourceGroups/jiyoon-rg-april-067"
+                "resource_group":  "jiyoon-rg-may-071",
+                "resource_group_id": "/subscriptions/3ec64e1e-1ce8-4f2c-82a0-a7f6db0899ca/resourceGroups/jiyoon-rg-may-071"
             },
             "provider": "azure",
             "reference": {
-                "resource_id": "/subscriptions/3ec64e1e-1ce8-4f2c-82a0-a7f6db0899ca/resourceGroups/jiyoon-rg-april-067/providers/Microsoft.Compute/virtualMachineScaleSets/jiyoon-vmss-power-state-test"
+                "resource_id": "/subscriptions/3ec64e1e-1ce8-4f2c-82a0-a7f6db0899ca/resourceGroups/jiyoon-rg-may-071/providers/Microsoft.Compute/virtualMachineScaleSets/jiyoon-vmss-normal"
             },
             "server_type": "UNKNOWN",
-            "region_code": "eastus",
+            "region_code": "eastus2",
             "tags": {
             },
             "ip_addresses": [
@@ -81,8 +81,8 @@ class TestCollector(TestCase):
             }
         }
 
-        resource_stream = self.power_scheduler.Controller.start({'secret_data': self.azure_credentials, 'resource_data': resource_data})
-        # resource_stream = self.power_scheduler.Controller.stop({'secret_data': self.azure_credentials, 'resource_data': resource_data})
+        # resource_stream = self.power_scheduler.Controller.start({'secret_data': self.azure_credentials, 'resource_data': resource_data})
+        resource_stream = self.power_scheduler.Controller.stop({'secret_data': self.azure_credentials, 'resource_data': resource_data})
 
         print(resource_stream)
 
