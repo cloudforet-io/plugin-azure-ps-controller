@@ -79,7 +79,11 @@ class AzureVmScaleSetManager(AzureManager):
         print("update_info")
         print(update_info)
         '''
-        return {}
+        update_info = {
+            'data': {},
+            'action': 'update_cloud_service'
+        }
+        return update_info
 
     def stop(self,  params):
         """
@@ -134,9 +138,11 @@ class AzureVmScaleSetManager(AzureManager):
             if vm_status != 'PowerState/deallocated':
                 res = azure_vm_connector.deallocate(resource_group_name, vm_scale_set_name)
                 _LOGGER.debug(f'[deallocate] instance res: {res}')
-        '''
-        'data': {},
-        'action': 'update_cloud_service
-        '''
-        return {}
+
+        update_info = {
+            'data': {},
+            'action': 'update_cloud_service'
+        }
+
+        return update_info
 
